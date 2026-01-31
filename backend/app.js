@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import userRoutes from "./routes/userRoutes.js"
 
 dotenv.config();
 
@@ -8,9 +9,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
     res.status(200).json({ Success: true, Message: "Car Manager App Running Successfull!" });
 })
+
+app.use('/user', userRoutes);
 
 
 mongoose.connect(process.env.MONGO_URL)
