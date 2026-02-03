@@ -10,8 +10,24 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data
             })
+        }),
+        login: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/login`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        logout: builder.mutation({
+            query: () => ({
+                url: `${USER_URL}/logout`,
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''}`
+                }
+            })
         })
     })
 })
 
-export const {useRegisterMutation} = authApiSlice
+export const {useRegisterMutation, useLoginMutation, useLogoutMutation} = authApiSlice

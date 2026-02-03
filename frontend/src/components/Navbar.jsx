@@ -1,9 +1,39 @@
 import { LogOut, Menu } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../redux/slices/authApiSlice';
+import { removeCredentials } from '../redux/slices/authSlice';
+import { toast } from 'react-toastify';
 
 
 const Navbar = () => {
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const {userInfo} = useSelector((state) => state.auth);
+  const [logout] = useLogoutMutation()
+
+
+  useEffect(() => {
+    if(userInfo){
+      navigate('/dashboard');
+    }
+  }, [navigate, userInfo])
+
+
+  const handleLogout = async() => {
+    try{
+      await logout().unwrap();
+    }catch(error){
+      toast.error(error?.data?.message || error.error)
+    } finally {
+      dispatch(removeCredentials());
+      localStorage.removeItem('userInfo');
+      toast.info('You have been logged Out!!');
+      navigate('/login');
+    }
+  }
 
 return (
 
@@ -33,7 +63,7 @@ return (
 
     {/* Actions */}
     <div className="hidden md:flex">
-      <button className="flex gap-2 text-white px-6 py-2 rounded items-center font-semibold bg-black">
+      <button onClick={handleLogout} className="flex gap-2 text-white px-6 hover:cursor-pointer py-2 rounded items-center font-semibold bg-black">
         <LogOut className="w-4 h-4" /> Logout
       </button>
     </div>
@@ -55,7 +85,7 @@ return (
             Car
           </a>
         
-        <button  className="flex gap-2 text-red px-6 py-3 bg-black">
+        <button onClick={() => {handleLogout}}  className="flex gap-2 text-red px-6 hover:cursor-pointer py-3 bg-black">
           <LogOut className="w-4 h-4" /> Logout
         </button>
       </div>

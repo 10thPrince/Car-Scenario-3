@@ -1,10 +1,11 @@
 import { Eye, EyeClosed, EyeOff } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../redux/slices/authApiSlice';
 import { toast } from 'react-toastify';
 import { setCredentials } from '../redux/slices/authSlice';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -17,24 +18,24 @@ const Register = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {userInfo} = useSelector((state) => state.auth);
-    const [register, {loading}] = useRegisterMutation();
+    const { userInfo } = useSelector((state) => state.auth);
+    const [register, { isLoading }] = useRegisterMutation();
 
     useEffect(() => {
-        if(userInfo){
+        if (userInfo) {
             navigate('/dashboard');
         }
     }, [navigate, userInfo])
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        if(password !== confirmPass){
+        if (password !== confirmPass) {
             toast.error('Password Do no match!');
             return
-        }else{
+        } else {
             try {
-                const res = await register({name, email, password}).unwrap();
-                dispatch(setCredentials({...res}));
+                const res = await register({ name, email, password }).unwrap();
+                dispatch(setCredentials({ ...res }));
 
                 toast.success('Profile Created Successful!')
                 navigate('/dashboard');
@@ -62,7 +63,7 @@ const Register = () => {
                             type="text"
                             value={name}
                             name='name'
-                            onChange={(e) => {setName(e.target.value)}}
+                            onChange={(e) => { setName(e.target.value) }}
                             placeholder="John Doe"
                             className="w-full border border-black px-3 py-2 outline-none focus:bg-gray-100"
                             required
@@ -76,7 +77,7 @@ const Register = () => {
                             value={email}
                             name='email'
                             required
-                            onChange={(e)=>{setEmail(e.target.value)}}
+                            onChange={(e) => { setEmail(e.target.value) }}
                             placeholder="you@example.com"
                             className="w-full border border-black px-3 py-2 outline-none focus:bg-gray-100"
                         />
@@ -90,15 +91,15 @@ const Register = () => {
                                 placeholder="••••••••"
                                 name='password'
                                 required
-                                onChange={(e)=>{setPassword(e.target.value)}}
+                                onChange={(e) => { setPassword(e.target.value) }}
                                 value={password}
                                 className="w-full  px-2 py-2 outline-none focus:bg-gray-100"
                             />
-                            {showPassword ? <EyeClosed size={20} onClick={()=> {
+                            {showPassword ? <EyeClosed size={20} onClick={() => {
                                 setShowPassword(false)
-                            }}/> : <Eye size={20} onClick={()=>{
+                            }} /> : <Eye size={20} onClick={() => {
                                 setShowPassword(true)
-                            }}/>}
+                            }} />}
                         </div>
 
                     </div>
@@ -111,28 +112,32 @@ const Register = () => {
                                 value={confirmPass}
                                 name='confirmPass'
                                 required
-                                onChange={(e)=>{setConfirmPass(e.target.value)}}
+                                onChange={(e) => { setConfirmPass(e.target.value) }}
                                 placeholder="••••••••"
                                 className="w-full px-2 py-2 outline-none focus:bg-gray-100"
                             />
-                            {showConfirmPass ? <EyeClosed size={20} onClick={()=>{
+                            {showConfirmPass ? <EyeClosed size={20} onClick={() => {
                                 setShowConfirmPass(false)
-                            }}/> : <Eye size={20} onClick={()=>{
+                            }} /> : <Eye size={20} onClick={() => {
                                 setShowConfirmPass(true)
-                            }}/>}
+                            }} />}
                         </div>
 
                     </div>
 
-                    <button className="w-full bg-black text-white py-2 mt-2 hover:bg-gray-900 transition">
-                        Register
-                    </button>
+                    {isLoading ?
+                        <CircularProgress /> :
+                        <button className="w-full bg-black text-white py-2 mt-2 hover:bg-gray-900 transition">
+                            Register
+                        </button>
+                    }
+
 
                     <p className="text-sm text-center mt-4">
                         Already have an account?{" "}
-                        <span className="font-semibold hover:underline hover:text-blue-500 cursor-pointer">
+                        <Link to={'/login'} className="font-semibold hover:underline hover:text-blue-500 cursor-pointer">
                             Login
-                        </span>
+                        </Link>
                     </p>
                 </form>
             </div>
