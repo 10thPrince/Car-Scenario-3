@@ -26,11 +26,11 @@ const Navbar = () => {
     try{
       await logout().unwrap();
     }catch(error){
-      toast.error(error?.data?.message || error.error)
+      toast.error(error?.data?.message || error?.message)
     } finally {
       dispatch(removeCredentials());
       localStorage.removeItem('userInfo');
-      toast.info('You have been logged Out!!');
+      toast.success('You have been logged Out!!');
       navigate('/login');
     }
   }
