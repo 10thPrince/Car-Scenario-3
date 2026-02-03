@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js"
+import cors from 'cors'
 
 dotenv.config();
 
@@ -10,6 +11,11 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
+app.use(cors({
+    origin: ['http://localhost:5173'],
+    method:['POST', 'GET', 'PUT', 'DELETE'],
+    credentials: true
+}))
 
 app.get('/', (req, res) => {
     res.status(200).json({ Success: true, Message: "Car Manager App Running Successfull!" });
