@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js"
+import carRoutes from "./routes/carRoutes.js"
+import serviceRoutes from "./routes/serviceRoutes.js"
 import cors from 'cors'
 
 dotenv.config();
@@ -22,6 +24,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/user', userRoutes);
+app.use('/cars', carRoutes);
+app.use('/services', serviceRoutes);
 
 
 mongoose.connect(process.env.MONGO_URL)

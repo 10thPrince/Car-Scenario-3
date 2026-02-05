@@ -1,7 +1,7 @@
 import { LogOut, Menu } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../redux/slices/authApiSlice';
 import { removeCredentials } from '../redux/slices/authSlice';
 import { toast } from 'react-toastify';
@@ -15,11 +15,7 @@ const Navbar = () => {
   const [logout] = useLogoutMutation()
 
 
-  useEffect(() => {
-    if(userInfo){
-      navigate('/dashboard');
-    }
-  }, [navigate, userInfo])
+
 
 
   const handleLogout = async() => {
@@ -37,7 +33,7 @@ const Navbar = () => {
 
 return (
 
-  <nav className="w-full bg-white shadow-md px-6 py-3 flex items-center justify-between">
+  <nav className="w-full border-b bg-white shadow-md px-6 py-3 flex items-center justify-between">
     {/* Logo */}
     <div className="flex items-center gap-2">
       <span className="text-xl font-semibold">Car Manager</span>
@@ -46,18 +42,13 @@ return (
 
     {/* Desktop Menu */}
     <div className="hidden md:flex items-center gap-6">
-        <a
-          href="/car"
-          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition"
+        <Link
+          to="/car"
+          className="flex items-center gap-2 text-lg border rounded px-6 py-2 hover:text-white hover:bg-black font-medium  transition"
         >
           Car
-        </a>
-        <a
-          href="/car"
-          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition"
-        >
-          Car
-        </a>
+        </Link>
+        
     </div>
 
 
@@ -75,7 +66,7 @@ return (
     </button>
 
 
-    {open && (
+    {/* {open && (
       <div className="absolute top-16 left-0 w-full bg-white shadow-lg p-4 flex flex-col gap-4 md:hidden">
         
           <a
@@ -89,7 +80,7 @@ return (
           <LogOut className="w-4 h-4" /> Logout
         </button>
       </div>
-    )}
+    )} */}
   </nav>
 )
 }
