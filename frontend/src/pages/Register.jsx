@@ -23,7 +23,7 @@ const Register = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate('/dashboard');
+            navigate('/dashboard', {replace: true});
         }
     }, [navigate, userInfo])
 
