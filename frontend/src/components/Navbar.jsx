@@ -1,7 +1,7 @@
 import { LogOut, Menu } from 'lucide-react'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../redux/slices/authApiSlice';
 import { removeCredentials } from '../redux/slices/authSlice';
 import { toast } from 'react-toastify';
@@ -10,10 +10,13 @@ import { toast } from 'react-toastify';
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const {userInfo} = useSelector((state) => state.auth);
+  const [open, setOpen] = useState(false);
   const [logout] = useLogoutMutation()
 
+  const navLinkClass = ({ isActive }) =>
+    isActive
+      ? "btn btn-primary text-lg"
+      : "btn btn-outline text-lg";
 
 
 
@@ -33,35 +36,55 @@ const Navbar = () => {
 
 return (
 
-  <nav className="w-full border-b bg-white shadow-md px-6 py-3 flex items-center justify-between">
+  <nav className="w-full border-b-2 border-yellow-400 bg-white shadow-md px-6 py-3 flex items-center justify-between">
     {/* Logo */}
     <div className="flex items-center gap-2">
-      <span className="text-xl font-semibold">Car Manager</span>
+      <span className="text-xl font-semibold">
+        Car <span className="text-yellow-600">Manager</span>
+      </span>
     </div>
 
 
     {/* Desktop Menu */}
     <div className="hidden md:flex items-center gap-6">
-        <Link
+        <NavLink
+          to="/dashboard"
+          className={navLinkClass}
+        >
+          Dashboard
+        </NavLink>
+        <NavLink
           to="/car"
-          className="flex items-center gap-2 text-lg border rounded px-6 py-2 hover:text-white hover:bg-black font-medium  transition"
+          className={navLinkClass}
         >
           Car
-        </Link>
+        </NavLink>
+        <NavLink
+          to="/packages"
+          className={navLinkClass}
+        >
+          Packages
+        </NavLink>
+        <NavLink
+          to="/services"
+          className={navLinkClass}
+        >
+          Services
+        </NavLink>
         
     </div>
 
 
     {/* Actions */}
     <div className="hidden md:flex">
-      <button onClick={handleLogout} className="flex gap-2 text-white px-6 hover:cursor-pointer py-2 rounded items-center font-semibold bg-black">
+      <button onClick={handleLogout} className="btn btn-primary">
         <LogOut className="w-4 h-4" /> Logout
       </button>
     </div>
 
 
     {/* Mobile */}
-    <button onClick={() => setOpen(!open)} className="md:hidden">
+    <button onClick={() => setOpen(!open)} className="btn btn-icon md:hidden">
       <Menu />
     </button>
 
