@@ -1,4 +1,4 @@
-import { Eye, EyeClosed, EyeOff } from 'lucide-react';
+import { Eye, EyeClosed } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -46,13 +46,13 @@ const Register = () => {
     }
 
     return (
-        <div className="min-h-screen bg-white flex items-center justify-center">
-            <div className="w-full max-w-sm border border-black p-8">
+        <div className="min-h-screen bg-yellow-50 flex items-center justify-center">
+            <div className="w-full max-w-sm border-2 border-yellow-500 bg-white p-8 shadow-lg shadow-yellow-200/70">
                 <h2 className="text-2xl font-semibold text-black">
                     Create Account
                 </h2>
 
-                <p className="text-sm text-gray-600 mt-1 mb-6">
+                <p className="text-sm text-gray-700 mt-1 mb-6">
                     Register to access the system
                 </p>
 
@@ -65,7 +65,7 @@ const Register = () => {
                             name='name'
                             onChange={(e) => { setName(e.target.value) }}
                             placeholder="John Doe"
-                            className="w-full border border-black px-3 py-2 outline-none focus:bg-gray-100"
+                            className="w-full border border-black px-3 py-2 outline-none focus:bg-yellow-50"
                             required
                         />
                     </div>
@@ -79,7 +79,7 @@ const Register = () => {
                             required
                             onChange={(e) => { setEmail(e.target.value) }}
                             placeholder="you@example.com"
-                            className="w-full border border-black px-3 py-2 outline-none focus:bg-gray-100"
+                            className="w-full border border-black px-3 py-2 outline-none focus:bg-yellow-50"
                         />
                     </div>
 
@@ -93,7 +93,7 @@ const Register = () => {
                                 required
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 value={password}
-                                className="w-full  px-2 py-2 outline-none focus:bg-gray-100"
+                                className="w-full  px-2 py-2 outline-none focus:bg-yellow-50"
                             />
                             {showPassword ? <EyeClosed size={20} onClick={() => {
                                 setShowPassword(false)
@@ -114,7 +114,7 @@ const Register = () => {
                                 required
                                 onChange={(e) => { setConfirmPass(e.target.value) }}
                                 placeholder="••••••••"
-                                className="w-full px-2 py-2 outline-none focus:bg-gray-100"
+                                className="w-full px-2 py-2 outline-none focus:bg-yellow-50"
                             />
                             {showConfirmPass ? <EyeClosed size={20} onClick={() => {
                                 setShowConfirmPass(false)
@@ -127,7 +127,7 @@ const Register = () => {
 
                     {isLoading ?
                         <CircularProgress /> :
-                        <button className="w-full bg-black text-white py-2 mt-2 hover:bg-gray-900 transition">
+                        <button className="btn btn-primary btn-full mt-2">
                             Register
                         </button>
                     }
@@ -135,7 +135,7 @@ const Register = () => {
 
                     <p className="text-sm text-center mt-4">
                         Already have an account?{" "}
-                        <Link to={'/login'} className="font-semibold hover:underline hover:text-blue-500 cursor-pointer">
+                        <Link to={'/login'} className="font-semibold hover:underline hover:text-yellow-700 cursor-pointer">
                             Login
                         </Link>
                     </p>

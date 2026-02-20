@@ -15,9 +15,15 @@ const NotFound = () => {
        
       <p className='text-2xl font-semibold'> Page Not Found</p>
 
-      <button className='py-1 px-3 border border-black rounded mt-4 hover:cursor-pointer hover:bg-black hover:text-white'>
-        {userInfo ? <Link to={'/dashboard'} className='flex gap-1'>Go back Bro! <ArrowRight /></Link> : <Link to={'/login'} className='flex gap-1'>Please Log In<ArrowRight /></Link>}
-      </button>
+      {userInfo ? (
+        <Link to={'/dashboard'} className='btn btn-outline mt-4'>
+          Go back Bro! <ArrowRight />
+        </Link>
+      ) : (
+        <Link to={'/login'} className='btn btn-outline mt-4'>
+          Please Log In <ArrowRight />
+        </Link>
+      )}
     </div>
     </>
   )

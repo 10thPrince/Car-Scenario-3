@@ -4,6 +4,10 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js"
 import carRoutes from "./routes/carRoutes.js"
 import serviceRoutes from "./routes/serviceRoutes.js"
+import paymentRoutes from "./routes/paymentRoutes.js"
+import invoiceRoutes from "./routes/invoiceRoutes.js"
+import dashboardRoutes from "./routes/dashboardRoutes.js"
+import packageRoutes from "./routes/packageRoutes.js"
 import cors from 'cors'
 
 dotenv.config();
@@ -26,6 +30,10 @@ app.get('/', (req, res) => {
 app.use('/user', userRoutes);
 app.use('/cars', carRoutes);
 app.use('/services', serviceRoutes);
+app.use('/payments', paymentRoutes);
+app.use('/api/invoices', invoiceRoutes);
+app.use('/dashboard', dashboardRoutes);
+app.use('/packages', packageRoutes);
 
 
 mongoose.connect(process.env.MONGO_URL)
